@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code</title>
+</head>
+<body>
+  <h1>QR Code actualizado</h1>
+  <div id="qr-code"></div>
+  <input type="number" id="student-id" placeholder="Enter student ID">
+  <button onclick="fetchQRCode()">Generate QR Code</button>
+  <script>
+    async function fetchQRCode() {
+      const studentId = document.getElementById('student-id').value;
+      const response = await fetch(`/generate-qr/${studentId}`);
+      if (!response.ok) {
+        document.getElementById('qr-code').innerText = 'Error generating QR code.';
+        return;
+      }
+      const qrImage = await response.text();
+      document.getElementById('qr-code').innerHTML = qrImage;
+    }
+  </script>
+</body>
+</html>
